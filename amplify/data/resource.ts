@@ -15,7 +15,7 @@ const schema = a.schema({
     goalInterval: a.string(), // ^^ day would go here
     startDate: a.date(), // When you are starting the habit
     endDate: a.date(), // When you are ending the habit
-    completionHistory: a.hasMany('CompletionHistory', 'name')
+    completionHistory: a.hasMany('CompletionHistory', 'id')
   })
     .authorization((allow) => [allow.owner()]),
 
@@ -23,7 +23,8 @@ const schema = a.schema({
     date: a.date(),
     isHabitCompleted: a.boolean(),
     journalEntry: a.string(),
-    habit: a.belongsTo('Habit', 'name')
+    id: a.id(),
+    habit: a.belongsTo('Habit', 'id'),
   })
     .authorization((allow) => [allow.owner()]),
 });
