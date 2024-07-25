@@ -7,11 +7,21 @@ import '@aws-amplify/ui-react/styles.css'
 const client = generateClient<Schema>();
 
 export default function App() {
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
+  const [habits, setHabits] = useState<Array<Schema["Habit"]["type"]>>([]);
+  const [habitName, setHabitName] = useState('');
+  const [habitType, setHabitType] = useState(true);
+  const [goal, setGoal] = useState(0);
+  const [goalValue, setGoalValue] = useState('');
+  const [goalInterval, setGoalInterval] = useState('');
+  const [habitStartDate, setHabitStartDate] = useState(new Date);
+  const [habitEndDate, setHabitEndDate] = useState(new Date(new Date().setDate(new Date().getDate() + 1)));
+  const [completionDate, setCompletionDate] = useState(new Date);
+  const [isHabitCompleted, setIsHabitCompleted] = useState(false);
+  const [journalEntry, setJournalEntry] = useState('');
 
   function listTodos() {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
+    client.models.Habit.observeQuery().subscribe({
+      next: (data) => setHabits([...data.items]),
     });
   }
 
@@ -20,10 +30,21 @@ export default function App() {
   }, []);
 
   function createTodo() {
-    client.models.Todo.create({
-      content: window.prompt("Todo content"),
-      habit: 'ayo',
+    client.models.Habit.create({
+      name: window.prompt("Todo content"),
+      type: true,
+      goal: 20,
+      goalValue: 'Apple',
+      goalInterval: 'Day',
+      startDate: '2024-07-25',
+      endDate: '2024-07-30'
     });
+
+    client.models.CompletionHistory.create({
+      date: '2024-07-26',
+      isHabitCompleted: true,
+      journalEntry: 'This is a test',
+    })
   }
 
   return (
@@ -35,8 +56,8 @@ export default function App() {
           <button onClick={createTodo}>+ new</button>
           <button onClick={signOut}>Sign out</button>
           <ul>
-            {todos.map((todo) => (
-              <li key={todo.id}>{todo.content}</li>
+            {habits.map((habit) => (
+              <li key={habit.id}>{habit.name}</li>
             ))}
           </ul>
           <div>
