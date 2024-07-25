@@ -8,6 +8,7 @@ specifies that any user authenticated via an API key can "create", "read",
 =========================================================================*/
 const schema = a.schema({
   Habit: a.model({
+    id: a.id(), // Primary key
     name: a.string(), // What the habit is
     type: a.boolean(), // If it is to form or quit a habit
     goal: a.integer(), // Ex: 1 apple a day. 1 would go here
@@ -15,19 +16,20 @@ const schema = a.schema({
     goalInterval: a.string(), // ^^ day would go here
     startDate: a.date(), // When you are starting the habit
     endDate: a.date(), // When you are ending the habit
-    completionHistory: a.hasMany('CompletionHistory', 'id')
+    completionHistory: a.hasMany('CompletionHistory', 'habitId') // Correct foreign key reference
   })
     .authorization((allow) => [allow.owner()]),
 
   CompletionHistory: a.model({
-    date: a.date(),
-    isHabitCompleted: a.boolean(),
-    journalEntry: a.string(),
-    id: a.id(),
-    habit: a.belongsTo('Habit', 'id'),
+    id: a.id(), // Primary key
+    date: a.date(), // Date of completion
+    isHabitCompleted: a.boolean(), // Whether the habit was completed
+    journalEntry: a.string(), // Journal entry for that date
+    habitId: a.belongsTo('Habit', 'id') // Foreign key in CompletionHistory
   })
     .authorization((allow) => [allow.owner()]),
 });
+
 
 export type Schema = ClientSchema<typeof schema>;
 
