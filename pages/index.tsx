@@ -44,7 +44,6 @@ export default function App() {
       date: '2024-07-26',
       isHabitCompleted: true,
       journalEntry: 'This is a test',
-      id: '1',
     })
   }
 
