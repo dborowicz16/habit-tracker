@@ -27,6 +27,7 @@ export default function App() {
 
   useEffect(() => {
     listTodos();
+    console.log('give me list', listTodos());
   }, []);
 
   function createTodo() {
@@ -46,6 +47,8 @@ export default function App() {
       journalEntry: 'This is a test',
     })
   }
+
+
 
   return (
 
