@@ -27,7 +27,7 @@ export default function App() {
 
   useEffect(() => {
     listTodos();
-    console.log(client.models.Habit.list());
+    console.log('entries', client.models.Habit.list());
     }, []);
 
   function createTodo() {
