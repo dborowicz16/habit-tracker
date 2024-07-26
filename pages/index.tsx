@@ -25,9 +25,15 @@ export default function App() {
     });
   }
 
+  const getHabitEntries = async () => {
+    const habitEntries = await client.models.Habit.list();
+    console.log('Habit Entries:', habitEntries);
+    console.log('data', habitEntries.data[0].id)
+  }
+
   useEffect(() => {
     listTodos();
-    console.log('entries', client.models.Habit.list());
+    getHabitEntries()
     }, []);
 
   function createTodo() {
