@@ -15,6 +15,8 @@ const schema = a.schema({
     goalInterval: a.string(), // ^^ day would go here
     startDate: a.date(), // When you are starting the habit
     endDate: a.date(), // When you are ending the habit
+    emoji: a.string(),
+    habitColor: a.string(),
     completionHistoryLogs: a.hasMany('CompletionHistory', 'habitId') // Correct foreign key reference
   })
     .authorization((allow) => [allow.owner()]),

@@ -1,10 +1,10 @@
 body {
   margin: 0;
-  background: linear-gradient(180deg, rgb(117, 81, 194), rgb(255, 255, 255));
+  background: white;
   display: flex;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   justify-content: center;
   align-items: center;
 }
@@ -62,4 +62,16 @@ li:hover {
 a {
   font-weight: 800;
   text-decoration: none;
+}
+
+div.epr-category-nav button {
+  padding: 0;
+}
+
+div.epr-skin-tones {
+  flex-basis: 50px !important;
+}
+
+input[type="color" i]::-webkit-color-swatch {
+  border: none !important;
 }
