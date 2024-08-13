@@ -111,7 +111,7 @@ export default function App() {
             <h1>Let&apos;s make today great! 🥳</h1>
             <div style={{ display: 'flex', gap: 50, flexWrap: 'wrap', justifyContent: 'space-between' }}>
               {habits.map((habit) => (
-                <div key={habit.id} style={{ width: 350, height: 350, backgroundColor: habit.habitColor, borderRadius: 40, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }} onClick={() => setSelectedHabit(habit.id)}>
+                <div key={habit.id} style={{ width: 350, height: 350, backgroundColor: habit.habitColor ?? '#1c1c1c', borderRadius: 40, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }} onClick={() => setSelectedHabit(habit.id)}>
                   <p style={{ fontSize: 50, margin: 0 }}>{habit.emoji}</p>
                   <p style={{ fontSize: 32, margin: 0, fontWeight: 500 }}>{habit.name}</p>
                   <p style={{ fontSize: 32, margin: '-20px 0 10px 0', fontWeight: 500 }}>{habit.goal} {habit.goalValue} per {habit.goalInterval}</p>
