@@ -17,6 +17,7 @@ const schema = a.schema({
     endDate: a.date(), // When you are ending the habit
     emoji: a.string(),
     habitColor: a.string(),
+    currentValue: a.integer(),
     completionHistoryLogs: a.hasMany('CompletionHistory', 'habitId') // Correct foreign key reference
   })
     .authorization((allow) => [allow.owner()]),
@@ -25,6 +26,7 @@ const schema = a.schema({
     habitId: a.id(),
     date: a.date(), // Date of completion
     isHabitCompleted: a.boolean(), // Whether the habit was completed
+    amountCompleted: a.integer(),
     journalEntry: a.string(), // Journal entry for that date
     habit: a.belongsTo('Habit', 'habitId') // Foreign key in CompletionHistory
   })
