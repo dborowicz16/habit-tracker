@@ -49,6 +49,7 @@ export default function App() {
       goal: goal,
       goalValue: goalValue,
       goalInterval: goalInterval,
+      currentValue: 0,
       startDate: habitStartDate, //'2024-07-25'
       endDate: habitStartDate,
     });
