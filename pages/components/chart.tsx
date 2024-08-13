@@ -62,7 +62,7 @@ const Chart = ({ selectedHabit }: { selectedHabit: any }) => {
                     borderColor: 'inherit',
                     borderRadius: 20,
                     borderWidth: 1,
-                    formatter: `${selectedHabit?.currentValue} ${selectedHabit.goalValue}`
+                    formatter: `${selectedHabit?.currentValue} ${selectedHabit?.goalValue}`
                 }
             }
         ]
