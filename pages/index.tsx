@@ -26,7 +26,6 @@ export default function App() {
   const [selectedEmoji, setSelectedEmoji] = useState('');
   const [color, setColor] = useState('#808080');
   const [showHabitInputModal, setShowHabitInputModal] = useState(false);
-  const [currentValue, setCurrentValue] = useState(0);
   const [selectedHabit, setSelectedHabit] = useState('');
 
   function listTodos() {
@@ -116,7 +115,7 @@ export default function App() {
                   <p style={{ fontSize: 32, margin: 0, fontWeight: 500 }}>{habit.name}</p>
                   <p style={{ fontSize: 32, margin: '-20px 0 10px 0', fontWeight: 500 }}>{habit.goal} {habit.goalValue} per {habit.goalInterval}</p>
                   <div style={{ height: 150, width: 150, backgroundColor: 'white', borderRadius: 100, display: 'flex', flexDirection: 'column', justifyContent: 'center', fontSize: 32 }} onClick={() => setShowHabitInputModal(true)}>
-                    <p style={{ margin: 0, fontWeight: 'bold' }}>{habit.currentValue}</p>
+                    <p style={{ margin: 0, fontWeight: 'bold' }}>{habit?.currentValue}</p>
                     <p style={{ margin: '-15px 0 0 0', fontWeight: 'bold' }}>{habit.goalValue}</p>
                   </div>
                 </div>
