@@ -3,8 +3,9 @@ import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
 import { Authenticator } from '@aws-amplify/ui-react'
 import EmojiPicker from 'emoji-picker-react';
-import ReactEcharts from "echarts-for-react"; 
 import Chart from "./components/chart";
+import Link from 'next/link';
+import Image from "next/image";
 import '@aws-amplify/ui-react/styles.css'
 
 const client = generateClient<Schema>();
@@ -27,6 +28,8 @@ export default function App() {
   const [color, setColor] = useState('#808080');
   const [showHabitInputModal, setShowHabitInputModal] = useState(false);
   const [selectedHabit, setSelectedHabit] = useState('');
+  const [updatedValue, setUpdatedValue] = useState(0);
+  const [inputValue, setInputValue] = useState(0);
 
   function listTodos() {
     client.models.Habit.observeQuery().subscribe({
@@ -63,6 +66,13 @@ export default function App() {
     setShowNewHabitModal(!showNewHabitModal);
 
     console.log('create habit function')
+  }
+
+  const updateHabit = () => {
+    client.models.Habit.update({
+      id: selectedHabit,
+      currentValue: updatedValue
+    })
   }
 
   const handleHabitNameChange = (event: any) => {
@@ -102,6 +112,15 @@ export default function App() {
     setColor(event.target.value);
   };
 
+  const findSelectedHabit = habits.find((habit) => habit.id === selectedHabit);
+
+  console.log('selected ahbit is', selectedHabit)
+
+  // Function to handle input change
+  const handleInputChange = (event: any) => {
+    setUpdatedValue(event.target.value);
+  };
+
   return (
 
     <Authenticator>
@@ -111,11 +130,19 @@ export default function App() {
             <h1>Let&apos;s make today great! 🥳</h1>
             <div style={{ display: 'flex', gap: 50, flexWrap: 'wrap', justifyContent: 'space-between' }}>
               {habits.map((habit) => (
-                <div key={habit.id} style={{ width: 350, height: 350, backgroundColor: habit.habitColor ?? '#1c1c1c', borderRadius: 40, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }} onClick={() => setSelectedHabit(habit.id)}>
+                <div key={habit.id} style={{ width: 350, height: 350, backgroundColor: habit.habitColor ?? '#1c1c1c', borderRadius: 40, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', position: 'relative' }} onMouseOver={() => setSelectedHabit(habit.id)}>
+                  <Link href={`/history?${selectedHabit}`}>
+                    <div style={{ position: 'absolute', height: 30, width: 30, left: 30, top: 20 }}>
+                      <Image fill alt="history icon" src="/history.png" />
+                    </div>
+                  </Link>
+                  <div style={{ position: 'absolute', height: 27, width: 27, right: 30, top: 20 }}>
+                    <Image fill alt="trash icon" src="/trash.png" />
+                  </div>
                   <p style={{ fontSize: 50, margin: 0 }}>{habit.emoji}</p>
                   <p style={{ fontSize: 32, margin: 0, fontWeight: 500 }}>{habit.name}</p>
                   <p style={{ fontSize: 32, margin: '-20px 0 10px 0', fontWeight: 500 }}>{habit.goal} {habit.goalValue} per {habit.goalInterval}</p>
-                  <div style={{ height: 150, width: 150, backgroundColor: 'white', borderRadius: 100, display: 'flex', flexDirection: 'column', justifyContent: 'center', fontSize: 32 }} onClick={() => setShowHabitInputModal(true)}>
+                  <div style={{ height: 150, width: 150, backgroundColor: 'white', borderRadius: 100, display: 'flex', flexDirection: 'column', justifyContent: 'center', fontSize: 32, boxShadow: 'inset 0px 0px 5px 0px' }} onClick={() => setShowHabitInputModal(true)}>
                     <p style={{ margin: 0, fontWeight: 'bold' }}>{habit?.currentValue}</p>
                     <p style={{ margin: '-15px 0 0 0', fontWeight: 'bold' }}>{habit.goalValue}</p>
                   </div>
@@ -130,7 +157,11 @@ export default function App() {
           <EmojiPicker style={{ position: 'absolute', top: '30%', left: '50%', zIndex: 999 }} open={showEmojiPicker} onEmojiClick={(obj) => { setSelectedEmoji(obj.emoji); setShowEmojiPicker(false) }} />
           {showHabitInputModal &&
             <div style={{ height: '800px', width: '1000px', backgroundColor: '#ececec', position: 'absolute', top: '50%', left: '50%', zIndex: 998, translate: '-50% -50%', borderRadius: 40 }}>
-              <Chart selectedHabit={habits.find((habit) => habit.id === selectedHabit)} />
+              <Chart selectedHabit={findSelectedHabit} />
+              <p onClick={() => { setUpdatedValue((findSelectedHabit?.currentValue ?? 0) + 1) }}>+</p>
+              <input type="number" onChange={(e) => setUpdatedValue(parseInt(e.target.value))} />
+              <p>-</p>
+              <button onClick={updateHabit}>Update</button>
             </div>
           }
           {showNewHabitModal &&

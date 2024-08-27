@@ -1,7 +1,7 @@
 import React from "react";
 import ReactEcharts from "echarts-for-react";
 
-const Chart = ({ selectedHabit }: { selectedHabit: any }) => {
+const Chart = ({ selectedHabit }: { selectedHabit?: any }) => {
     console.log('data is', selectedHabit);
     const option = {
         xAxis: {
@@ -50,18 +50,12 @@ const Chart = ({ selectedHabit }: { selectedHabit: any }) => {
                     show: false,
                     distance: 50
                 },
-                data: [1],
-                title: {
-                    fontSize: 14
-                },
+                data: [(selectedHabit?.currentValue / selectedHabit?.goal) * 100],
                 detail: {
                     width: 50,
-                    height: 14,
+                    height: 50,
                     fontSize: 14,
                     color: 'inherit',
-                    borderColor: 'inherit',
-                    borderRadius: 20,
-                    borderWidth: 1,
                     formatter: `${selectedHabit?.currentValue} ${selectedHabit?.goalValue}`
                 }
             }

@@ -75,3 +75,8 @@ div.epr-skin-tones {
 input[type="color" i]::-webkit-color-swatch {
   border: none !important;
 }
+
+.echarts-for-react {
+  width: 200px;
+  height: 200px
+}
